@@ -359,6 +359,31 @@ var zoomPlugin = {
 
 	afterInit: function(chartInstance) {
 
+		chartInstance.zoomIn = function () {
+			var speedPercent = chartInstance.$zoom._options.zoom.speed;
+			
+			var rect = chartInstance.canvas.getBoundingClientRect();
+			var center = {
+				x: rect.width / 2,
+				y: rect.height / 2
+			};
+
+			doZoom(chartInstance, 1 + speedPercent, center);
+		};
+
+		chartInstance.zoomOut = function () {
+			var speedPercent = chartInstance.$zoom._options.zoom.speed;
+			
+			var rect = chartInstance.canvas.getBoundingClientRect();
+
+			var center = {
+				x: rect.width / 2,
+				y: rect.height / 2
+			};
+
+			doZoom(chartInstance, 1 - speedPercent, center);
+		};
+	
 		chartInstance.resetZoom = function() {
 			storeOriginalOptions(chartInstance);
 			var originalOptions = chartInstance.$zoom._originalOptions;
