@@ -360,6 +360,7 @@ var zoomPlugin = {
 	afterInit: function(chartInstance) {
 
 		chartInstance.zoomIn = function () {
+			var zoomOptions = chartInstance.$zoom._options.zoom;
 			var speedPercent = chartInstance.$zoom._options.zoom.speed;
 			
 			var rect = chartInstance.canvas.getBoundingClientRect();
@@ -369,9 +370,14 @@ var zoomPlugin = {
 			};
 
 			doZoom(chartInstance, 1 + speedPercent, center);
+			
+			if (typeof zoomOptions.onZoomComplete === 'function') {
+				zoomOptions.onZoomComplete({chart: chartInstance});
+			}
 		};
 
 		chartInstance.zoomOut = function () {
+			var zoomOptions = chartInstance.$zoom._options.zoom;
 			var speedPercent = chartInstance.$zoom._options.zoom.speed;
 			
 			var rect = chartInstance.canvas.getBoundingClientRect();
@@ -382,6 +388,10 @@ var zoomPlugin = {
 			};
 
 			doZoom(chartInstance, 1 - speedPercent, center);
+			
+			if (typeof zoomOptions.onZoomComplete === 'function') {
+				zoomOptions.onZoomComplete({chart: chartInstance});
+			}
 		};
 	
 		chartInstance.resetZoom = function() {
