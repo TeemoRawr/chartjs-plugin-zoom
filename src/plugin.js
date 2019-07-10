@@ -42,7 +42,7 @@ function resolveOptions(chart, options) {
 	// We also want to make sure listeners aren't always on. E.g. if you're scrolling down a page
 	// and the mouse goes over a chart you don't want it intercepted unless the plugin is enabled
 	var node = props._node;
-	if (!(options.zoom && options.zoom.drag)) {
+	if (options.zoom && options.zoom.scroll) {
 		node.addEventListener('wheel', props._wheelHandler);
 	} else {
 		node.removeEventListener('wheel', props._wheelHandler);
